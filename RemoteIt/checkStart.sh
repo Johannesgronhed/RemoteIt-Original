@@ -1,29 +1,26 @@
-#!/bin/bash -x
+#!/bin/bash
 
-ps aux | grep -v grep | grep /usr/lib/firefox/firefox
+# greps to see if firefox is started
+ps aux | grep -v grep | grep "/Applications/Google Chrome.app"
 check=$?
 
+# if it is, exit this script 
 if [ "${check}" -eq "0" ]
 then
-	logger -i "Firefox is started"
+	# write it to log file
+	echo "Chrome is started"
+
+	exit 0
 else
-	logger -i "Starting firefox RemoteIt"
+	# Else, start firefox
+	echo "Starting Chrome RemoteIt"
 	export DISPLAY=:0
-	python /home/netadmin/showWebsites.py &
+	python /usr/local/bin/showWebsites.py &
+	
+	sleep 5
+	osascript /usr/local/bin/rmBar.scpt
+	
+	exit 0
+
 fi
-
-ps aux | grep -v grep | grep Xtightvnc
-check2=$?
-
-if [ "${check2}" -eq "0" ]
-then
-	logger -i "RemoteIt is started"
-else
-	export USER="netadmin"
-	export DISPLAY=:0
-	logger -i "Starting vnc RemoteIT"
-	/usr/bin/vncserver
-fi
-
-
 exit 0
