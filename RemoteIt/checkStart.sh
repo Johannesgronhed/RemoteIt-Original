@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# greps to see if firefox is started
+# greps to see if chrome is started
 ps aux | grep -v grep | grep "/Applications/Google Chrome.app"
 check=$?
 
@@ -12,7 +12,7 @@ then
 
 	exit 0
 else
-	# Else, start firefox
+	# Else, start chrome
 	echo "Starting Chrome RemoteIt"
 	export DISPLAY=:0
 	python /usr/local/bin/showWebsites.py &
